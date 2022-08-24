@@ -41,7 +41,7 @@ for (let i = 0; i < SQUARE_NUMBER; i++) {
     board.append(square)
 }
 
-core()
+
 
 function setColor(element, colors) {
     const color = getRandomColor(colors)
@@ -59,6 +59,12 @@ function getRandomColor(colors) {
     return colors[index]
 }
 
+function getRandomNumber(min, max) {
+    return Math.round(Math.random() * (max - min) + min)
+}
+
+
+createCore()
 let el;
 
 function attack(x, y) {
@@ -67,7 +73,7 @@ function attack(x, y) {
         for (let j = y - 3 + (((i - x) > 0) ? (i - x) : (x - i)); j <= y + 3 - (((x - i) > 0) ? (x - i) : (i - x)); j++) {
             try {
                 el = board.children[j * inRow + i]
-                setColor(el, colors3)
+                setColor(el, colors2)
                 setTimeout(removeColor, 900, el)
             } catch (e) {
                 
@@ -77,16 +83,39 @@ function attack(x, y) {
     
 }
 
-function core() {
-    //console.log('el')
+function createCore() {
     const a = Math.floor(inRow / 2)
-    const b = Math.floor(inRow / 10)
+    //const b = Math.floor(inRow / 10)
     const c = Math.floor(inColumn / 2)
     const d = Math.min(Math.floor(inColumn / 10), Math.floor(inRow / 10))
     //console.log(a,b,c,d)
     for (let i = a - d; i <= a + d; i++)
         for (let j = c - d; j <= c + d; j++){
-            const el = board.children[j * inRow + i]
-            setInterval(setColor, 1000, el, colors1)
+            if ((((i - a) ** 2) + ((j - c) ** 2)) <= (d ** 2) + (d-1) / 3.14) {
+                const el = board.children[j * inRow + i]
+                setInterval(setColor, 1000, el, colors1)
+            }
         }
 }
+
+
+// function createEnemy() {
+//     console.log('work')
+//     let razm = getRandomNumber(2, Math.min(Math.floor(inColumn / 20), Math.floor(inRow / 20)))
+//     let a = getRandomNumber(razm+1, inRow - razm)
+//     let b = getRandomNumber(razm+1, inColumn - razm)
+//     for (let i = a - razm; i <= a + razm; i++)
+//         for (let j = b - razm; j <= b + razm; j++) {
+//                 const el = board.children[j * inRow + i]
+//                 setInterval(setColor, 1000, el, colors3)
+//         }
+// }
+
+
+
+// createEnemy()
+// createEnemy()
+// createEnemy()
+// createEnemy()
+// createEnemy()
+
